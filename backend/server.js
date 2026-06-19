@@ -3,11 +3,17 @@ const cors = require("cors");
 
 const app = express();
 
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-app.post("/api/enquiry", (req, res) => {
+// Health Check Route
+app.get("/", (req, res) => {
+  res.send("Kidrove Workshop Backend Running 🚀");
+});
 
+// Enquiry API
+app.post("/api/enquiry", (req, res) => {
   console.log("New enquiry:", req.body);
 
   const { name, email, phone } = req.body;
@@ -25,6 +31,9 @@ app.post("/api/enquiry", (req, res) => {
   });
 });
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+// Start Server
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

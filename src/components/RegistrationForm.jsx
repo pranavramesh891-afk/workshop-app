@@ -1,152 +1,244 @@
 import { useState } from "react";
-
+import { FaUser, FaEnvelope, FaPhone } from "react-icons/fa";
+import kidImage from "../assets/kid.jpg";
 export default function RegistrationForm() {
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
+name: "",
+email: "",
+phone: "",
+});
+
+const [loading, setLoading] = useState(false);
+const [success, setSuccess] = useState("");
+
+const handleChange = (e) => {
+setFormData({
+...formData,
+[e.target.name]: e.target.value,
+});
+};
+
+const handleSubmit = (e) => {
+e.preventDefault();
+
+```
+setLoading(true);
+
+setTimeout(() => {
+  setLoading(false);
+  setSuccess("🎉 Registration submitted successfully!");
+
+  setFormData({
     name: "",
     email: "",
     phone: "",
   });
+}, 1500);
+```
 
-  const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(false);
+};
 
-  const validate = () => {
-    let newErrors = {};
+return ( <section
+   id="register"
+   className="
+   py-24
+   bg-gradient-to-br
+   from-blue-600
+   via-purple-600
+   to-pink-500
+   "
+ > <div className="max-w-7xl mx-auto px-6">
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required";
-    }
+```
+    <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
-    ) {
-      newErrors.email = "Invalid email address";
-    }
+      {/* Left Side */}
 
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
-    } else if (!/^\d{10}$/.test(formData.phone)) {
-      newErrors.phone = "Phone number must be 10 digits";
-    }
+    {/* Left Side */}
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+<div className="text-white">
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  {/* Heading */}
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  <h2 className="text-3xl lg:text-5xl font-extrabold mb-6 leading-tight">
+     Join the Future
+    <br />
+    Innovators
+  </h2>
 
-    if (!validate()) return;
+  {/* Image */}
 
-    setLoading(true);
+  <div className="mb-6">
+    <img
+      src={kidImage}
+      alt="Kids Learning AI"
+      className="
+      w-full
+      max-w-lg
+      rounded-3xl
+      shadow-2xl
+      border-4
+      border-white/20
+      object-cover
+      "
+    />
+  </div>
 
-    setTimeout(() => {
-      setLoading(false);
-      setSuccess("Registration submitted successfully!");
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-      });
-    }, 1500);
-  };
+  {/* Description */}
 
-  return (
-    <section id="register" className="py-20 bg-gray-50">
-      <div className="max-w-xl mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center mb-10">
+  <p className="text-xl text-purple-100 mb-8 max-w-xl">
+    Give your child the opportunity to learn AI, Robotics,
+    Coding and Problem Solving through exciting hands-on
+    projects and interactive learning experiences.
+  </p>
+
+  {/* Workshop Info */}
+
+  <div className="flex flex-wrap gap-4">
+
+    <span className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-full font-semibold">
+      👦 Ages 8–14
+    </span>
+
+    <span className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-full font-semibold">
+      📅 4 Weeks
+    </span>
+
+    <span className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-full font-semibold">
+      🌐 Online
+    </span>
+
+    <span className="bg-white/10 backdrop-blur-md px-5 py-3 rounded-full font-semibold">
+      🏆 Certificate
+    </span>
+
+  </div>
+
+</div>
+
+      {/* Form */}
+
+      <div
+        className="
+        bg-white/20
+        backdrop-blur-xl
+        rounded-3xl
+        p-8
+        shadow-2xl
+        border
+        border-white/20
+        "
+      >
+        <h3 className="text-3xl font-bold text-white mb-8 text-center">
           Register Now
-        </h2>
+        </h3>
 
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-8 rounded-2xl shadow-lg"
-        >
-          <div className="mb-5">
-            <label className="block mb-2 font-medium">
-              Full Name
-            </label>
+        <form onSubmit={handleSubmit} className="space-y-5">
+
+          <div className="relative">
+            <FaUser className="absolute left-4 top-4 text-gray-500" />
 
             <input
               type="text"
               name="name"
+              placeholder="Full Name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full border rounded-lg p-3"
+              required
+              className="
+              w-full
+              pl-12
+              pr-4
+              py-4
+              rounded-xl
+              bg-white
+              outline-none
+              "
             />
-
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.name}
-              </p>
-            )}
           </div>
 
-          <div className="mb-5">
-            <label className="block mb-2 font-medium">
-              Email Address
-            </label>
+          <div className="relative">
+            <FaEnvelope className="absolute left-4 top-4 text-gray-500" />
 
             <input
               type="email"
               name="email"
+              placeholder="Email Address"
               value={formData.email}
               onChange={handleChange}
-              className="w-full border rounded-lg p-3"
+              required
+              className="
+              w-full
+              pl-12
+              pr-4
+              py-4
+              rounded-xl
+              bg-white
+              outline-none
+              "
             />
-
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email}
-              </p>
-            )}
           </div>
 
-          <div className="mb-5">
-            <label className="block mb-2 font-medium">
-              Phone Number
-            </label>
+          <div className="relative">
+            <FaPhone className="absolute left-4 top-4 text-gray-500" />
 
             <input
-              type="text"
+              type="tel"
               name="phone"
+              placeholder="Phone Number"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full border rounded-lg p-3"
+              required
+              className="
+              w-full
+              pl-12
+              pr-4
+              py-4
+              rounded-xl
+              bg-white
+              outline-none
+              "
             />
-
-            {errors.phone && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.phone}
-              </p>
-            )}
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
+            className="
+            w-full
+            py-4
+            rounded-xl
+            bg-gradient-to-r
+            from-yellow-400
+            to-orange-500
+            text-white
+            font-bold
+            text-lg
+            shadow-lg
+            hover:scale-105
+            transition-all
+            duration-300
+            "
           >
-            {loading ? "Submitting..." : "Enroll Now"}
+            {loading ? "Submitting..." : "Enroll Now 🚀"}
           </button>
 
           {success && (
-            <p className="text-green-600 text-center mt-4">
+            <div className="bg-green-500 text-white p-3 rounded-xl text-center">
               {success}
-            </p>
+            </div>
           )}
         </form>
+
+        <div className="mt-6 text-center text-white/90 text-sm">
+          ⭐ Limited Seats Available
+        </div>
       </div>
-    </section>
-  );
+
+    </div>
+  </div>
+</section>
+
+
+);
 }

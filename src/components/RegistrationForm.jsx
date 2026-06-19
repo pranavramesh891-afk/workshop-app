@@ -18,24 +18,43 @@ setFormData({
 });
 };
 
-const handleSubmit = (e) => {
-e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-```
-setLoading(true);
+  setLoading(true);
+  setSuccess("");
 
-setTimeout(() => {
+  try {
+    const response = await fetch(
+      "http://localhost:5000/api/enquiry",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+
+    const data = await response.json();
+
+    if (data.success) {
+      setSuccess("🎉 Registration submitted successfully!");
+
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+      });
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong");
+  }
+
   setLoading(false);
-  setSuccess("🎉 Registration submitted successfully!");
-
-  setFormData({
-    name: "",
-    email: "",
-    phone: "",
-  });
-}, 1500);
-```
-
 };
 
 return ( <section

@@ -26,7 +26,7 @@ const handleSubmit = async (e) => {
 
   try {
     const response = await fetch(
-      "http://localhost:5000/api/enquiry",
+      "https://workshop-app-wg1o.onrender.com/api/enquiry",
       {
         method: "POST",
         headers: {
@@ -51,10 +51,10 @@ const handleSubmit = async (e) => {
     }
   } catch (error) {
     console.error(error);
-    alert("Something went wrong");
+    alert("Failed to submit registration. Please try again.");
+  } finally {
+    setLoading(false);
   }
-
-  setLoading(false);
 };
 
 return ( <section
